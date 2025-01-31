@@ -1,0 +1,49 @@
+@use 'base/variables' as v;
+
+.header {
+    height: 25rem;
+    background-color: v.$morado;
+    border-radius: 1rem 1rem 0 0 ;
+
+    h1{
+        text-align: center;
+        color: v.$blanco;
+        text-shadow: .4rem .4rem .4rem v.$sombraTenue;
+    }
+}
+
+.header__form{
+    margin: 0 auto;
+    width: 65rem;
+    display: grid;
+    grid-template-rows: 2fr, 1fr;
+    justify-items: right;
+    gap: 1rem;
+
+    .form__text{
+        width: 100%;
+        max-width: 65rem;
+        height: 10rem;
+        padding: 1rem;
+        border-radius: 2rem;
+        box-shadow: .3rem .5rem .3rem v.$sombraTenue;
+        font-weight: 400;
+        resize: none;
+
+    }
+
+    .form__boton{
+        width: 10rem;
+        height: 3rem;
+        padding: .5rem;
+        background-color: v.$verde;
+        color: v.$blanco;
+        font-family: v.$titulo;
+        font-size: 1.5rem;
+        text-align: center;
+        border-radius: 20rem;
+        border: .2rem solid v.$blanco;
+        box-shadow: .3rem .5rem .3rem v.$sombraTenue;
+        cursor: pointer;
+    }
+}

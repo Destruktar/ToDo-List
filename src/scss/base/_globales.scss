@@ -1,0 +1,51 @@
+@use 'variables' as v;
+
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+    scroll-padding-top: 0rem;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body{
+    font-family: v.$textos;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 2rem;
+}
+
+p{
+    margin: 0;
+    color: v.$negro;
+    line-height: 1.5;
+}
+
+.contenedor{
+    width: 95%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.contenedor-principal{
+    margin: 20rem auto;
+    box-shadow: .3rem .5rem .4rem v.$sombra;
+    border-radius: 0 0 1rem 1rem;
+}
+
+a{
+    text-decoration: none;
+}
+
+h1{
+    margin: 0 0 2rem 0;
+    font-family: v.$titulo;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 6rem;
+    font-weight: 700;
+}
