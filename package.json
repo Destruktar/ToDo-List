@@ -1,0 +1,32 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "Proyecto interactivo con JavaScript para practicar más de este mismo",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Destruktar/ToDo-List.git"
+  },
+  "keywords": [
+    "ToDo",
+    "list",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "author": "Damian Arrieta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Destruktar/ToDo-List/issues"
+  },
+  "homepage": "https://github.com/Destruktar/ToDo-List#readme",
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-sass": "^6.0.0",
+    "sass": "^1.83.4"
+  }
+}
