@@ -431,9 +431,18 @@ h1 {
   width: 5rem;
   text-align: center;
 }
-.list__tarea .tarea__text {
+.list__tarea .tarea__text,
+.list__tarea .tarea__editar {
   width: 60rem;
   overflow-wrap: break-word;
+}
+.list__tarea .tarea__editar {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.list__tarea .tarea__editar:focus {
+  outline: none;
 }
 .list__tarea .tarea__text--checked {
   width: 60rem;

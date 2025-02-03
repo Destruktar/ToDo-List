@@ -32,9 +32,19 @@
         text-align: center;
     }
 
-    .tarea__text{
+    .tarea__text,
+    .tarea__editar{
         width: 60rem;
         overflow-wrap: break-word;
+    }
+
+    .tarea__editar{
+        background: none;
+        border:none;
+        padding: 0;
+        &:focus{
+            outline: none;
+        }
     }
 
     .tarea__text--checked{

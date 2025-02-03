@@ -11,11 +11,12 @@ document.querySelector('.header__form').addEventListener('submit', (event) =>{
     if(text === '') return;
 
     const task = {
-        Texto: textarea.value.trim()
+        Texto: textarea.value.trim(),
+        Checked : false
     };
 
     //Obtiene las tareas existentes de local Storage y las almacena en un array
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let tasks = obtenerTareas()
 
     //Agrega la nueva tarea al array
     tasks.push(task);
@@ -34,7 +35,7 @@ function mostrarTareas() {
     const tareasGuardadas = document.querySelector('.main__list');
     tareasGuardadas.innerHTML = "";
 
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let tasks = obtenerTareas();
 
     tasks.forEach(task => {
         const taskHTML = `
@@ -49,11 +50,31 @@ function mostrarTareas() {
                     </div>
         </div>`;
 
-        tareasGuardadas.insertAdjacentHTML('beforeend', taskHTML);
+        const taskCheckedHTML = `
+        <div class="list__tarea">
+                    <div class="tarea__checkbox">
+                        <i class="fa-regular fa-square-check checkbox"></i>
+                    </div>
+                    <p class="tarea__text tarea__text--checked">${task.Texto}</p>
+                    <div class="tarea__botones">
+                        <div class="tarea__boton editar"><i class="fa-regular fa-pen-to-square"></i></div>
+                        <div class="tarea__boton eliminar"><i class="fa-regular fa-trash-can"></i></div>
+                    </div>
+        </div>`;
+
+        if(task.Checked == false){
+
+            tareasGuardadas.insertAdjacentHTML('beforeend', taskHTML);
+        } else {
+            tareasGuardadas.insertAdjacentHTML('beforeend', taskCheckedHTML);
+        }
     });
 }
 
 document.querySelector('.main__list').addEventListener('click', (event) => {
+
+    let tasks = obtenerTareas();
+
     if(event.target.closest('.eliminar')){
         const tarea = event.target.closest('.list__tarea');
         const textTarea = tarea.querySelector('.tarea__text').textContent;
@@ -63,15 +84,74 @@ document.querySelector('.main__list').addEventListener('click', (event) => {
     }
 
     if(event.target.classList.contains('checkbox')){
-        const textarea = event.target.closest('.list__tarea').querySelector('.tarea__text');
+        const traeElElemnto = event.target.closest('.list__tarea');
+        const textarea = traeElElemnto.querySelector('.tarea__text');
+
+        tasks.forEach(task => {
+            if(task.Texto === textarea.textContent){
+                task.Checked =!task.Checked;
+            }
+        });
 
         event.target.classList.toggle('fa-square');
         event.target.classList.toggle('fa-square-check');
 
         textarea.classList.toggle('tarea__text--checked');
 
+        guardarTareas(tasks);
+
     }
 
+    if (event.target.closest('.editar')) {
+        const tareaElemento = event.target.closest('.list__tarea');
+        const textoElemento = tareaElemento.querySelector('.tarea__text');
+        let tasks = obtenerTareas();
+    
+        // Crear un input con el mismo texto actual
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.classList.add('tarea__editar');
+        input.value = textoElemento.textContent.trim();
+        input.classList.add('tarea__input');
+        
+        // Reemplazar el texto con el input
+        tareaElemento.replaceChild(input, textoElemento);
+        input.focus();
+    
+        // Función para guardar cambios
+        const guardarEdicion = () => {
+            const nuevoTexto = input.value.trim();
+            if (nuevoTexto === '') return; // Evitar que se guarde vacío
+    
+            // Buscar y actualizar la tarea en el array
+            tasks.forEach(task => {
+                if (task.Texto === textoElemento.textContent.trim()) {
+                    task.Texto = nuevoTexto;
+                }
+            });
+    
+            // Guardar cambios en localStorage
+            guardarTareas(tasks);
+    
+            // Reemplazar input con el nuevo texto
+            const nuevoTextoElemento = document.createElement('p');
+            nuevoTextoElemento.textContent = nuevoTexto;
+            nuevoTextoElemento.classList.add('tarea__text');
+            if (tareaElemento.querySelector('.tarea__text--checked')) {
+                nuevoTextoElemento.classList.add('tarea__text--checked'); // Mantener tachado si estaba
+            }
+    
+            tareaElemento.replaceChild(nuevoTextoElemento, input);
+        };
+    
+        // Guardar cuando el usuario presione Enter o salga del input
+        input.addEventListener('blur', guardarEdicion);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                input.blur(); // Llama a guardarEdicion automáticamente
+            }
+        });
+    }
 });
 
 function obtenerTareas(){
@@ -79,7 +159,7 @@ function obtenerTareas(){
 }
 
 function guardarTareas(tareas){
-    localStorage.setItem('tasks', JSON.stringify(tareas))
+    localStorage.setItem('tasks', JSON.stringify(tareas));
 }
 
 function eliminarTarea(textTarea){
